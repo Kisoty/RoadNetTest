@@ -6,10 +6,21 @@ namespace Modules;
 
 use PDO;
 
+/**
+ * Class DB
+ * @package Modules
+ */
 Class DB
 {
+    /**
+     * @var
+     */
     private $db_connect;
 
+    /**
+     * DB constructor.
+     * @throws \Exception
+     */
     public function __construct()
     {
         $this->connect();
@@ -19,12 +30,19 @@ Class DB
         }
     }
 
+    /**
+     *
+     */
     public function connect(): void
     {
         $config = require_once 'config/db_config.php';
         $this->db_connect = new PDO("mysql:host=" . $config['host'] . ";charset=" . $config['charset'], $config['user'], $config['pass']);
     }
 
+    /**
+     * Creates database roadnet_db and table reviews
+     * @throws \Exception
+     */
     public function setUp(): void
     {
         $this->db_connect->exec('CREATE DATABASE IF NOT EXISTS `roadnet_db`; use `roadnet_db');
@@ -39,6 +57,14 @@ Class DB
         throw new \Exception('Database and table created, send request again');
     }
 
+    /**
+     * @param string $dateSort
+     * @param string $rateSort
+     * @param int $page
+     * @param int $limit
+     * @return array
+     * @throws \Exception
+     */
     public function getReviews(string $dateSort = '', string $rateSort = '', int $page = 1, int $limit = 10): array
     {
         $sql = 'SELECT `id`, `name`, `rating`, SUBSTRING_INDEX(`refs`,\'&\',1) as \'first_ref\' FROM `reviews` ORDER BY ';
@@ -60,6 +86,12 @@ Class DB
         return $result;
     }
 
+    /**
+     * @param int $id
+     * @param array|null $additionalFields
+     * @return array
+     * @throws \Exception
+     */
     public function getReviewById(int $id, array $additionalFields = null): array
     {
         $sql = 'SELECT `name`, `rating`, SUBSTRING_INDEX(`refs`,\'&\',1) as \'first_ref\'';
@@ -79,6 +111,14 @@ Class DB
         return $result[0];
     }
 
+    /**
+     * @param string $name
+     * @param string $review
+     * @param int $rate
+     * @param string $refs
+     * @return int
+     * @throws \Exception
+     */
     public function createReview(string $name, string $review, int $rate, string $refs) : int
     {
         $sql = 'INSERT INTO `reviews` (`name`,`review`,`refs`,`rating`) VALUES (:name,:review,:refs,:rating);';
