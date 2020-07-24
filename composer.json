@@ -3,5 +3,8 @@
     "classmap": [
       "Modules/DB"
     ]
+  },
+  "require": {
+    "ext-pdo": "*"
   }
 }

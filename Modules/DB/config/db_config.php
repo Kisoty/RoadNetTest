@@ -1,6 +1,6 @@
 <?php
 return ['host' => "localhost",
-    'db' => "link_db",
+    'db' => "roadnet_db",
     'user' => 'root',
     'pass' => '',
     'charset' =>'utf8'
