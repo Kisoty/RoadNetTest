@@ -31,7 +31,7 @@ Class DB
     }
 
     /**
-     *
+     *Establish connect to database
      */
     public function connect(): void
     {
