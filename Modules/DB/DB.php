@@ -81,7 +81,7 @@ Class DB
 
     public function createReview(string $name, string $review, int $rate, string $refs) : int
     {
-        $sql = 'INSERT INTO `reviews` (`name`,`review`,`refs`,`rating`) VALUES (:name,:review,:refs,:rating); SELECT LAST_INSERT_ID();';
+        $sql = 'INSERT INTO `reviews` (`name`,`review`,`refs`,`rating`) VALUES (:name,:review,:refs,:rating);';
         $stmt = $this->db_connect->prepare($sql);
 
         if ($stmt->execute(['name' => $name, 'review' => $review, 'refs' => $refs, 'rating' => $rate]))
